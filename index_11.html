@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anthony Taravella Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,750&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A1622;
+    --card:#122536;
+    --ink:#E9F3F4;
+    --dim:#8FB0BC;
+    --gold:#F2B441;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:"Instrument Sans",sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    min-height:100vh;
+  }
+  .wrap{max-width:1100px;margin:0 auto;padding:70px 24px 100px}
+  h1{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:750;
+    font-size:clamp(34px,5.5vw,60px);
+    letter-spacing:-.02em;
+    text-align:center;
+    margin-bottom:60px;
+  }
+  h1 span{color:var(--gold)}
+  .contact{
+    text-align:center;
+    color:var(--gold);
+    font-size:15px;
+    margin:-44px 0 14px;
+  }
+  .bio{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:400;
+    max-width:620px;
+    margin:0 auto 60px;
+    text-align:center;
+    color:var(--dim);
+    font-size:19px;
+    line-height:1.6;
+  }
+  .contact{
+    text-align:center;
+    color:var(--gold);
+    font-size:15px;
+    margin:-44px 0 14px;
+  }
+  .bio{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:400;
+    max-width:620px;
+    margin:0 auto 60px;
+    text-align:center;
+    color:var(--dim);
+    font-size:19px;
+    line-height:1.6;
+  }
+  .section{
+    border:1px solid rgba(233,243,244,.12);
+    border-radius:18px;
+    padding:26px 26px 30px;
+    margin-bottom:34px;
+  }
+  .section h2{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:600;
+    font-size:22px;
+    margin-bottom:18px;
+    color:var(--gold);
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+    gap:28px;
+  }
+  .feature + .feature{margin-top:30px}
+  .feature{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:26px;
+    align-items:center;
+  }
+  @media(max-width:720px){.feature{grid-template-columns:1fr}}
+  .feature .desc{
+    color:var(--dim);
+    font-size:16px;
+    line-height:1.7;
+  }
+  .feature .desc strong{color:var(--ink);font-weight:600}
+  .more{
+    display:inline-block;
+    margin-top:12px;
+    color:var(--gold);
+    font-size:15px;
+    text-decoration:none;
+    border-bottom:1px solid var(--gold);
+    padding-bottom:1px;
+  }
+  .more:hover{color:var(--ink);border-color:var(--ink)}
+  .frame{
+    display:block;
+    text-decoration:none;
+    color:var(--ink);
+    background:var(--card);
+    border-radius:14px;
+    overflow:hidden;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .frame:hover{
+    transform:translateY(-4px);
+    box-shadow:0 14px 34px rgba(0,0,0,.45);
+  }
+  .frame:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  .frame .img{
+    aspect-ratio:1/1;
+    background:#0D1D2C;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--dim);
+    font-size:13px;
+  }
+  .frame img{width:100%;height:100%;object-fit:cover;display:block}
+  .frame .title{
+    padding:16px 18px;
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:600;
+    font-size:20px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Anthony Taravella <span>Portfolio</span></h1>
+  <p class="contact">agtara317@gmail.com &nbsp;·&nbsp; 718-608-4053</p>
+  <p class="bio">Solo game developer building on Roblox, UEFN, and Unreal Engine 5. I take every game from idea to launch myself — design, 3D art in Blender, gameplay programming, and release.</p>
+  <div class="section">
+    <h2>Roblox Games</h2>
+    <div class="feature">
+      <a class="frame" href="https://www.roblox.com/share?code=21e1ecb7839e984790eab8b57784f4b1&amp;type=ExperienceDetails&amp;stamp=1784236604784" target="_blank" rel="noopener">
+        <div class="img"><img src="CampIcon2.png" alt="Night At Camp"></div>
+      </a>
+      <p class="desc"><strong>Night At Camp</strong> — a co-op survival horror game. I designed and built it solo — game systems, UI, 3D modeling in Blender, playtesting, release planning, and launch.<br><a class="more" href="https://www.roblox.com/share?code=21e1ecb7839e984790eab8b57784f4b1&amp;type=ExperienceDetails&amp;stamp=1784236604784" target="_blank" rel="noopener">More info</a></p>
+    </div>
+
+    <div class="feature">
+      <a class="frame" href="https://www.roblox.com/share?code=3ea4146c754f3a4ea6f5ffb957200a24&amp;type=ExperienceDetails&amp;stamp=1784237273135" target="_blank" rel="noopener">
+        <div class="img"><img src="DiveIcon.png" alt="Dive for Treasure"></div>
+      </a>
+      <p class="desc"><strong>Dive for Treasure</strong> — a diving and collection simulator built around a live player-driven economy, with a global supply-and-demand market that reprices loot across every server. Designed, built, and shipped solo, then updated from playtest feedback.<br><a class="more" href="https://www.roblox.com/share?code=3ea4146c754f3a4ea6f5ffb957200a24&amp;type=ExperienceDetails&amp;stamp=1784237273135" target="_blank" rel="noopener">More info</a></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Fortnite Profile</h2>
+    <div class="feature">
+      <a class="frame" href="https://fortnite.gg/creator/spidrmonkey" target="_blank" rel="noopener">
+        <div class="img"><img src="PFP.png" alt="Fortnite Developer Profile"></div>
+      </a>
+      <p class="desc"><strong>Fortnite Developer Profile</strong> — my published UEFN/Fortnite work. I've been developing and shipping games on Fortnite for 4 years, building gameplay systems in Verse and designing every island to comply with Epic's content guidelines.<br><a class="more" href="https://fortnite.gg/creator/spidrmonkey" target="_blank" rel="noopener">More info</a></p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
