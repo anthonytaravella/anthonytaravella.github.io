@@ -106,6 +106,15 @@
     padding-bottom:1px;
   }
   .more:hover{color:var(--ink);border-color:var(--ink)}
+  .statlist{
+    list-style:none;
+    margin:12px 0 0;
+    padding:0;
+    color:var(--ink);
+    font-size:15px;
+  }
+  .statlist li{padding:3px 0}
+  .statlist li::before{content:"\25B8  ";color:var(--gold)}
   .frame{
     display:block;
     text-decoration:none;
@@ -166,7 +175,16 @@
       <a class="frame" href="https://fortnite.gg/creator/spidrmonkey" target="_blank" rel="noopener">
         <div class="img"><img src="PFP.png" alt="Fortnite Developer Profile"></div>
       </a>
-      <p class="desc"><strong>Fortnite Developer Profile</strong> — my published UEFN/Fortnite work. I've been developing and shipping games on Fortnite for 4 years, building gameplay systems in Verse and designing every island to comply with Epic's content guidelines.<br><a class="more" href="https://fortnite.gg/creator/spidrmonkey" target="_blank" rel="noopener">More info</a></p>
+      <div class="desc">
+        <p><strong>Fortnite Developer Profile</strong> — my published UEFN/Fortnite work. I've been developing and shipping games on Fortnite for 4 years, building gameplay systems in Verse and designing every island to comply with Epic's content guidelines.</p>
+        <ul class="statlist">
+          <li>8K+ followers</li>
+          <li>7.2M minutes played</li>
+          <li>37K favorites</li>
+          <li>Peak CCU of 1.35K players</li>
+        </ul>
+        <a class="more" href="https://fortnite.gg/creator/spidrmonkey" target="_blank" rel="noopener">More info</a>
+      </div>
     </div>
   </div>
 </div>
