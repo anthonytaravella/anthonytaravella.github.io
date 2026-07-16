@@ -114,6 +114,52 @@
     font-size:15px;
   }
   .statlist li{padding:3px 0}
+  .btn-process{
+    display:inline-block;
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:600;
+    font-size:16px;
+    color:var(--bg);
+    background:var(--gold);
+    padding:12px 26px;
+    border-radius:999px;
+    text-decoration:none;
+    box-shadow:0 6px 18px rgba(242,180,65,.25);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn-process:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 28px rgba(242,180,65,.4);
+  }
+  .btn-hold{text-align:center;margin:-30px 0 60px}
+  .process-steps{list-style:none;margin:0;padding:0}
+  .process-steps li{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:16px;
+    padding:12px 0;
+    border-bottom:1px solid rgba(233,243,244,.1);
+    font-size:15.5px;
+  }
+  .process-steps li:last-child{border-bottom:0}
+  .process-steps .step{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:600;
+    color:var(--gold);
+  }
+  .process-steps .what{color:var(--dim)}
+  @media(max-width:560px){.process-steps li{grid-template-columns:1fr;gap:4px}}
+  .principles{
+    list-style:none;
+    margin:26px 0 0;
+    padding:22px 0 0;
+    border-top:1px solid rgba(233,243,244,.15);
+    color:var(--dim);
+    font-size:15.5px;
+  }
+  .principles li{padding:5px 0}
+  .principles li::before{content:"\25B8  ";color:var(--gold)}
+  .principles .big{color:var(--ink);font-weight:700;font-size:17px}
   .statlist li::before{content:"\25B8  ";color:var(--gold)}
   .frame{
     display:block;
@@ -152,6 +198,7 @@
   <h1>Anthony Taravella <span>Portfolio</span></h1>
   <p class="contact">agtara317@gmail.com &nbsp;·&nbsp; 718-608-4053</p>
   <p class="bio">Solo game developer building on Roblox, UEFN, and Unreal Engine 5. I take every game from idea to launch myself — design, 3D art in Blender, gameplay programming, and release.</p>
+  <p class="btn-hold"><a class="btn-process" href="#process">See my design process ↓</a></p>
   <div class="section">
     <h2>Roblox Games</h2>
     <div class="feature">
@@ -186,6 +233,27 @@
         <a class="more" href="https://fortnite.gg/creator/spidrmonkey" target="_blank" rel="noopener">More info</a>
       </div>
     </div>
+  </div>
+
+  <div class="section" id="process">
+    <h2>My Design Process</h2>
+    <ul class="process-steps">
+      <li><span class="step">1 · Research / Game Ideation</span><span class="what">Study the genre. Every game needs a core gameplay loop that will keep players playing.</span></li>
+      <li><span class="step">2 · Prototype</span><span class="what">Build the core loop fast and ugly. If it isn't fun in a graybox, it won't be fun looking cool.</span></li>
+      <li><span class="step">3 · Build</span><span class="what">Simple (not really), build the game.</span></li>
+      <li><span class="step">4 · Playtest</span><span class="what">Playtest Playtest Playtest Playtest Playtest</span></li>
+      <li><span class="step">5 · Ship / Market</span><span class="what">Release planning, launch.</span></li>
+      <li><span class="step">6 · Study</span><span class="what">Read the analytics, find the biggest problem, fix it, repeat.</span></li>
+    </ul>
+    <ul class="principles">
+      <li>Pay attention to the community, they are the ones playing.</li>
+      <li>Marketing is just as important as building.</li>
+      <li>Who is playing my game?</li>
+      <li>playtest</li>
+      <li>Copy writing!</li>
+      <li>THUMBNAILS</li>
+      <li class="big">If you don't enjoy your game, no one else will.</li>
+    </ul>
   </div>
 </div>
 </body>
