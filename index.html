@@ -153,12 +153,25 @@
     background:var(--card);
     border-radius:14px;
     overflow:hidden;
+    position:relative;
+    --rx:0deg;--ry:0deg;
     transition:transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s ease;
   }
   .frame:hover{
-    transform:translateY(-6px) rotate(-.4deg);
+    transform:perspective(900px) translateY(-6px) rotateX(var(--rx)) rotateY(var(--ry));
     box-shadow:0 22px 44px rgba(0,0,0,.5), 0 0 0 1px rgba(242,180,65,.35);
   }
+  .frame::after{
+    content:"";
+    position:absolute;
+    top:0;left:-80%;
+    width:45%;height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent);
+    transform:skewX(-20deg);
+    transition:left .7s ease;
+    pointer-events:none;
+  }
+  .frame:hover::after{left:140%}
   .frame:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
   .frame .img{
     aspect-ratio:16/9;
@@ -192,54 +205,154 @@
   .statlist li{padding:3px 0}
   .statlist li::before{content:"\25B8  ";color:var(--gold)}
 
-  .process-steps{list-style:none;margin:0;padding:0}
-  .process-steps li{
-    display:grid;
-    grid-template-columns:210px 1fr;
-    gap:16px;
-    padding:12px 0;
-    border-bottom:1px solid rgba(233,243,244,.1);
-    font-size:15.5px;
+  /* scroll progress bar */
+  .progress{
+    position:fixed;top:0;left:0;
+    width:100%;height:3px;
+    background:linear-gradient(90deg,var(--gold),#5FC6E0);
+    transform-origin:0 50%;
+    transform:scaleX(0);
+    z-index:20;
   }
-  .process-steps li:last-child{border-bottom:0}
-  .process-steps .step{
+
+  /* soft glow that follows the cursor */
+  .cursor-glow{
+    position:fixed;
+    width:420px;height:420px;
+    left:-500px;top:-500px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(242,180,65,.09),transparent 65%);
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* featured game section */
+  .section.featured{
+    position:relative;
+    overflow:hidden;
+    border-color:rgba(242,180,65,.3);
+    padding-bottom:70px;
+  }
+  .section.featured > *:not(.waves){position:relative;z-index:1}
+  .tag{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--gold);
+    border:1px solid rgba(242,180,65,.4);
+    border-radius:999px;
+    padding:4px 12px;
+    margin-bottom:14px;
+  }
+  .tag i{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--gold);
+    animation:pulse 1.8s ease-out infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(242,180,65,.7)}
+    100%{box-shadow:0 0 0 10px rgba(242,180,65,0)}
+  }
+
+  /* flowing river waves */
+  .waves{position:absolute;left:0;right:0;bottom:0;height:64px;pointer-events:none;z-index:0}
+  .waves svg{position:absolute;bottom:0;left:0;width:200%;height:100%;animation:flow 16s linear infinite}
+  .waves svg.w2{animation-duration:10s;animation-direction:reverse;height:80%}
+  @keyframes flow{to{transform:translateX(-50%)}}
+
+  /* boat bob on the featured image */
+  .bob{animation:bob 4.5s ease-in-out infinite}
+  @keyframes bob{
+    0%,100%{transform:translateY(0) rotate(0)}
+    50%{transform:translateY(-7px) rotate(.5deg)}
+  }
+
+  /* stat tiles */
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .stat{
+    background:var(--card);
+    border:1px solid rgba(233,243,244,.1);
+    border-radius:12px;
+    padding:12px 8px;
+    text-align:center;
+    opacity:0;
+    transform:translateY(16px) scale(.95);
+    transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1), border-color .2s;
+    transition-delay:calc(var(--i) * .1s + .2s);
+  }
+  .reveal.in .stat{opacity:1;transform:none}
+  .stat:hover{border-color:rgba(242,180,65,.5)}
+  .stat b{
+    display:block;
     font-family:"Bricolage Grotesque",sans-serif;
-    font-weight:600;
+    font-weight:750;
+    font-size:22px;
     color:var(--gold);
   }
-  .process-steps .what{color:var(--dim)}
-  @media(max-width:560px){.process-steps li{grid-template-columns:1fr;gap:4px}}
-
-  .principles{
-    list-style:none;
-    margin:26px 0 0;
-    padding:22px 0 0;
-    border-top:1px solid rgba(233,243,244,.15);
-    color:var(--dim);
-    font-size:15.5px;
-  }
-  .principles li{padding:5px 0}
-  .principles li::before{content:"\25B8  ";color:var(--gold)}
-  .principles .big{color:var(--ink);font-weight:700;font-size:17px}
+  .stat span{font-size:11.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
 
   @media(prefers-reduced-motion:reduce){
-    .glow,.hero-in{animation:none}
+    .glow,.hero-in,.tag i,.waves svg,.bob{animation:none}
     .hero-in{opacity:1}
     h1 span{animation:none;-webkit-text-fill-color:var(--gold)}
     .reveal{opacity:1;transform:none;transition:none}
-    .frame,.frame img,.btn-process{transition:none}
+    .stat{opacity:1;transform:none;transition:none}
+    .frame,.frame img,.frame::after,.btn-process{transition:none}
+    .cursor-glow{display:none}
     html{scroll-behavior:auto}
   }
 </style>
 </head>
 <body>
+<div class="progress"></div>
+<div class="cursor-glow"></div>
 <div class="glow g1"></div>
 <div class="glow g2"></div>
 <div class="wrap">
   <h1 class="hero-in">Anthony Taravella <span>Portfolio</span></h1>
   <p class="contact hero-in" style="animation-delay:.15s">agtara317@gmail.com &nbsp;·&nbsp; 718-608-4053</p>
   <p class="bio hero-in" style="animation-delay:.3s">Solo game developer building on Roblox, UEFN, and Unreal Engine 5. I take every game from idea to launch myself — design, 3D art in Blender, gameplay programming, and release.</p>
-  <p class="btn-hold hero-in" style="animation-delay:.45s"><a class="btn-process" href="#process">See my design process ↓</a></p>
+
+  <div class="section featured reveal" id="roblox">
+    <span class="tag"><i></i>Featured</span>
+    <h2>Roblox Games</h2>
+    <div class="feature">
+      <div class="bob">
+        <a class="frame" href="https://www.roblox.com/games/71593571625633/Survive-the-River" target="_blank" rel="noopener">
+          <div class="img"><img src="RiverIcon.png" alt="Survive the River"></div>
+        </a>
+      </div>
+      <div class="desc">
+        <div class="stats">
+          <div class="stat" style="--i:0"><b data-count="980" data-suffix="K+">980K+</b><span>Visits</span></div>
+          <div class="stat" style="--i:1"><b data-count="2.6" data-suffix="K">2.6K</b><span>Peak CCU</span></div>
+          <div class="stat" style="--i:2"><b data-count="88" data-suffix="%">88%</b><span>Liked</span></div>
+        </div>
+        <p><strong>Survive the River</strong> — a co-op boat survival shooter. Up to four players ride a boat downriver through themed biomes, shooting enemies attacking from the water, land, and sky while upgrading their guns and boat mid-run.<br><a class="more" href="https://www.roblox.com/games/71593571625633/Survive-the-River" target="_blank" rel="noopener">More info</a></p>
+      </div>
+    </div>
+
+    <div class="feature reveal">
+      <a class="frame" href="https://www.roblox.com/games/70953091928109/SILENCE" target="_blank" rel="noopener">
+        <div class="img"><img src="SilenceIcon.png" alt="Silence"></div>
+      </a>
+      <p class="desc"><strong>Silence</strong> — an escape-horror game across three maps: The Hallways, The Depot, and The Farm.<br><a class="more" href="https://www.roblox.com/games/70953091928109/SILENCE" target="_blank" rel="noopener">More info</a></p>
+    </div>
+
+    <div class="waves" aria-hidden="true">
+      <svg class="w1" viewBox="0 0 2400 64" preserveAspectRatio="none"><path fill="rgba(30,110,140,.35)" d="M0 30 Q50 16 100 30 T200 30 T300 30 T400 30 T500 30 T600 30 T700 30 T800 30 T900 30 T1000 30 T1100 30 T1200 30 T1300 30 T1400 30 T1500 30 T1600 30 T1700 30 T1800 30 T1900 30 T2000 30 T2100 30 T2200 30 T2300 30 T2400 30 L2400 64 L0 64Z"/></svg>
+      <svg class="w2" viewBox="0 0 2400 64" preserveAspectRatio="none"><path fill="rgba(95,198,224,.18)" d="M0 36 Q75 26 150 36 T300 36 T450 36 T600 36 T750 36 T900 36 T1050 36 T1200 36 T1350 36 T1500 36 T1650 36 T1800 36 T1950 36 T2100 36 T2250 36 T2400 36 L2400 64 L0 64Z"/></svg>
+    </div>
+  </div>
 
   <div class="section reveal">
     <h2>Fortnite Profile</h2>
@@ -259,53 +372,74 @@
       </div>
     </div>
   </div>
-
-  <div class="section reveal">
-    <h2>Roblox Games</h2>
-    <div class="feature">
-      <a class="frame" href="https://www.roblox.com/games/71593571625633/Survive-the-River" target="_blank" rel="noopener">
-        <div class="img"><img src="RiverIcon.png" alt="Survive the River"></div>
-      </a>
-      <p class="desc"><strong>Survive the River</strong> — a co-op boat survival shooter. Up to four players ride a boat downriver through themed biomes, shooting enemies attacking from the water, land, and sky while upgrading their guns and boat mid-run.<br><a class="more" href="https://www.roblox.com/games/71593571625633/Survive-the-River" target="_blank" rel="noopener">More info</a></p>
-    </div>
-
-    <div class="feature reveal">
-      <a class="frame" href="https://www.roblox.com/games/70953091928109/SILENCE" target="_blank" rel="noopener">
-        <div class="img"><img src="SilenceIcon.png" alt="Silence"></div>
-      </a>
-      <p class="desc"><strong>Silence</strong> — an escape-horror game across three maps: The Hallways, The Depot, and The Farm.<br><a class="more" href="https://www.roblox.com/games/70953091928109/SILENCE" target="_blank" rel="noopener">More info</a></p>
-    </div>
-  </div>
-
-  <div class="section reveal" id="process">
-    <h2>My Design Process</h2>
-    <ul class="process-steps">
-      <li><span class="step">1 · Research / Game Ideation</span><span class="what">Study the genre. Every game needs a core gameplay loop that will keep players playing.</span></li>
-      <li><span class="step">2 · Prototype</span><span class="what">Build the core loop fast and ugly. If it isn't fun in a graybox, it won't be fun looking cool.</span></li>
-      <li><span class="step">3 · Build</span><span class="what">Simple (not really), build the game.</span></li>
-      <li><span class="step">4 · Playtest</span><span class="what">Playtest Playtest Playtest Playtest Playtest</span></li>
-      <li><span class="step">5 · Ship / Market</span><span class="what">Release planning, launch.</span></li>
-      <li><span class="step">6 · Study</span><span class="what">Read the analytics, find the biggest problem, fix it, repeat.</span></li>
-    </ul>
-    <ul class="principles">
-      <li>Pay attention to the community, they are the ones playing.</li>
-      <li>Marketing is just as important as building.</li>
-      <li>Who is playing my game?</li>
-      <li>playtest</li>
-      <li>Copy writing!</li>
-      <li>THUMBNAILS</li>
-      <li class="big">If you don't enjoy your game, no one else will.</li>
-    </ul>
-  </div>
 </div>
 
 <script>
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = matchMedia('(hover: hover)').matches;
+
+  // count-up numbers on the stat tiles
+  function countUp(el){
+    const raw = el.dataset.count, end = parseFloat(raw);
+    const dec = (raw.split('.')[1] || '').length, suf = el.dataset.suffix || '';
+    if(still){ el.textContent = end.toFixed(dec) + suf; return; }
+    const t0 = performance.now(), dur = 1500;
+    const step = t => {
+      const k = Math.min((t - t0) / dur, 1), ease = 1 - Math.pow(1 - k, 3);
+      el.textContent = (end * ease).toFixed(dec) + suf;
+      if(k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  if(!still) document.querySelectorAll('[data-count]').forEach(el=>{
+    const dec = (el.dataset.count.split('.')[1] || '').length;
+    el.textContent = (0).toFixed(dec) + (el.dataset.suffix || '');
+  });
+
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
-      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        e.target.querySelectorAll(':scope > .feature [data-count]').forEach(countUp);
+        io.unobserve(e.target);
+      }
     });
   },{threshold:.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // scroll progress bar
+  const bar = document.querySelector('.progress');
+  const onScroll = ()=>{
+    const h = document.documentElement;
+    const p = h.scrollTop / ((h.scrollHeight - h.clientHeight) || 1);
+    bar.style.transform = 'scaleX(' + p + ')';
+  };
+  addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  if(canHover && !still){
+    // cursor glow
+    const glow = document.querySelector('.cursor-glow');
+    addEventListener('mousemove', e=>{
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+    }, {passive:true});
+
+    // 3D tilt on game images
+    document.querySelectorAll('.frame').forEach(f=>{
+      f.addEventListener('mousemove', e=>{
+        const r = f.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5;
+        const y = (e.clientY - r.top) / r.height - .5;
+        f.style.setProperty('--ry', (x * 9) + 'deg');
+        f.style.setProperty('--rx', (-y * 9) + 'deg');
+      });
+      f.addEventListener('mouseleave', ()=>{
+        f.style.setProperty('--ry', '0deg');
+        f.style.setProperty('--rx', '0deg');
+      });
+    });
+  }
 </script>
 </body>
 </html>
