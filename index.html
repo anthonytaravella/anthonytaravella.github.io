@@ -72,94 +72,110 @@
   @keyframes shimmer{to{background-position:-250% 0}}
 
   .contact{
-    text-align:center;
-    color:var(--gold);
-    font-size:15px;
-    margin:-44px 0 14px;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:-40px 0 22px;
   }
+  .contact a{
+    color:var(--gold);
+    font-size:14.5px;
+    text-decoration:none;
+    border:1px solid rgba(242,180,65,.3);
+    border-radius:999px;
+    padding:6px 14px;
+    background:rgba(242,180,65,.06);
+    transition:background .2s, border-color .2s, transform .2s;
+  }
+  .contact a:hover{background:rgba(242,180,65,.14);border-color:var(--gold);transform:translateY(-2px)}
   .bio{
     font-family:"Bricolage Grotesque",sans-serif;
     font-weight:400;
     max-width:620px;
-    margin:0 auto 60px;
+    margin:0 auto 70px;
     text-align:center;
     color:var(--dim);
     font-size:19px;
     line-height:1.6;
   }
-  .btn-hold{text-align:center;margin:-30px 0 60px}
-  .btn-process{
-    position:relative;
-    display:inline-block;
-    font-family:"Bricolage Grotesque",sans-serif;
-    font-weight:600;
-    font-size:16px;
-    color:var(--bg);
-    background:var(--gold);
-    padding:12px 26px;
-    border-radius:999px;
-    text-decoration:none;
-    overflow:hidden;
-    box-shadow:0 6px 18px rgba(242,180,65,.25);
-    transition:transform .18s ease, box-shadow .18s ease;
-  }
-  .btn-process::after{
-    content:"";
-    position:absolute;
-    top:0;left:-80%;
-    width:50%;height:100%;
-    background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
-    transform:skewX(-20deg);
-    transition:left .5s ease;
-  }
-  .btn-process:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 14px 32px rgba(242,180,65,.45)}
-  .btn-process:hover::after{left:130%}
 
   .section{
-    border:1px solid rgba(233,243,244,.12);
-    border-radius:18px;
-    padding:26px 26px 30px;
-    margin-bottom:34px;
-    background:rgba(18,37,54,.35);
+    border:1px solid rgba(233,243,244,.1);
+    border-radius:22px;
+    padding:34px 36px 40px;
+    margin-bottom:40px;
+    background:linear-gradient(180deg,rgba(18,37,54,.55),rgba(18,37,54,.25));
     backdrop-filter:blur(4px);
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+  }
+  @media(max-width:560px){.section{padding:26px 20px 30px}}
+  .head{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:30px;
   }
   .section h2{
     font-family:"Bricolage Grotesque",sans-serif;
     font-weight:600;
-    font-size:22px;
-    margin-bottom:18px;
+    font-size:14px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
     color:var(--gold);
+    white-space:nowrap;
   }
+  .head .line{
+    flex:1;
+    height:1px;
+    background:linear-gradient(90deg,rgba(242,180,65,.45),transparent);
+    transform-origin:0 50%;
+    transform:scaleX(0);
+    transition:transform 1s cubic-bezier(.2,.7,.2,1) .2s;
+  }
+  .reveal.in .head .line{transform:scaleX(1)}
 
   /* scroll reveal */
   .reveal{opacity:0;transform:translateY(34px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1)}
   .reveal.in{opacity:1;transform:translateY(0)}
 
-  .feature + .feature{margin-top:30px}
+  .feature + .feature{margin-top:44px;padding-top:44px;border-top:1px solid rgba(233,243,244,.08)}
   .feature{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:26px;
+    grid-template-columns:minmax(0,512px) minmax(0,1fr);
+    gap:44px;
     align-items:center;
   }
-  @media(max-width:720px){.feature{grid-template-columns:1fr}}
-  .desc{color:var(--dim);font-size:16px;line-height:1.7}
-  .desc strong{color:var(--ink);font-weight:600}
+  @media(max-width:900px){
+    .feature{grid-template-columns:1fr;gap:26px}
+    .feature > :first-child{width:100%;max-width:512px;margin:0 auto}
+  }
+  .desc{color:var(--dim);font-size:16.5px;line-height:1.7}
+  .desc h3{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:750;
+    font-size:clamp(26px,3vw,34px);
+    letter-spacing:-.01em;
+    color:var(--ink);
+    margin-bottom:16px;
+    line-height:1.1;
+  }
 
   .frame{
     display:block;
     text-decoration:none;
     color:var(--ink);
     background:var(--card);
-    border-radius:14px;
+    border-radius:18px;
     overflow:hidden;
     position:relative;
+    box-shadow:0 14px 34px rgba(0,0,0,.35);
     --rx:0deg;--ry:0deg;
     transition:transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s ease;
   }
   .frame:hover{
     transform:perspective(900px) translateY(-6px) rotateX(var(--rx)) rotateY(var(--ry));
-    box-shadow:0 22px 44px rgba(0,0,0,.5), 0 0 0 1px rgba(242,180,65,.35);
+    box-shadow:0 26px 54px rgba(0,0,0,.55), 0 0 0 1px rgba(242,180,65,.4);
   }
   .frame::after{
     content:"";
@@ -174,36 +190,34 @@
   .frame:hover::after{left:140%}
   .frame:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
   .frame .img{
-    aspect-ratio:16/9;
+    aspect-ratio:1/1;
     background:#0D1D2C;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:var(--dim);
-    font-size:13px;
     overflow:hidden;
   }
   .frame img{
     width:100%;height:100%;object-fit:cover;display:block;
     transition:transform .6s cubic-bezier(.2,.7,.2,1);
   }
-  .frame:hover img{transform:scale(1.07)}
+  .frame:hover img{transform:scale(1.05)}
 
   .more{
-    display:inline-block;
-    margin-top:12px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-top:22px;
     color:var(--gold);
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:600;
     font-size:15px;
     text-decoration:none;
-    border-bottom:1px solid var(--gold);
-    padding-bottom:1px;
-    transition:color .2s,border-color .2s;
+    border:1px solid rgba(242,180,65,.5);
+    border-radius:999px;
+    padding:9px 20px;
+    transition:background .2s,color .2s,transform .2s,box-shadow .2s;
   }
-  .more:hover{color:var(--ink);border-color:var(--ink)}
-
-  .statlist{list-style:none;margin:12px 0 0;padding:0;color:var(--ink);font-size:15px}
-  .statlist li{padding:3px 0}
-  .statlist li::before{content:"\25B8  ";color:var(--gold)}
+  .more::after{content:"→";transition:transform .2s}
+  .more:hover{background:var(--gold);color:var(--bg);transform:translateY(-2px);box-shadow:0 10px 24px rgba(242,180,65,.3)}
+  .more:hover::after{transform:translateX(4px)}
 
   /* scroll progress bar */
   .progress{
@@ -244,7 +258,6 @@
     border:1px solid rgba(242,180,65,.4);
     border-radius:999px;
     padding:4px 12px;
-    margin-bottom:14px;
   }
   .tag i{
     width:7px;height:7px;border-radius:50%;
@@ -255,7 +268,6 @@
     0%{box-shadow:0 0 0 0 rgba(242,180,65,.7)}
     100%{box-shadow:0 0 0 10px rgba(242,180,65,0)}
   }
-
 
   /* boat bob on the featured image */
   .bob{animation:bob 4.5s ease-in-out infinite}
@@ -269,13 +281,18 @@
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:10px;
-    margin-bottom:16px;
+    margin-bottom:20px;
   }
+  .stats.four{grid-template-columns:repeat(4,1fr)}
+  .stats.four b{font-size:22px}
+  .stats.four .stat{padding:14px 4px 12px}
+  @media(max-width:1000px) and (min-width:901px){.stats.four{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.stats.four{grid-template-columns:repeat(2,1fr)}}
   .stat{
     background:var(--card);
     border:1px solid rgba(233,243,244,.1);
-    border-radius:12px;
-    padding:12px 8px;
+    border-radius:14px;
+    padding:16px 8px 14px;
     text-align:center;
     opacity:0;
     transform:translateY(16px) scale(.95);
@@ -288,18 +305,30 @@
     display:block;
     font-family:"Bricolage Grotesque",sans-serif;
     font-weight:750;
-    font-size:22px;
+    font-size:26px;
+    line-height:1.15;
     color:var(--gold);
   }
-  .stat span{font-size:11.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+  .stat{position:relative}
+  .stat.live span{margin:0 0 4px}
+  .stat .dot{
+    position:absolute;top:10px;right:10px;
+    width:8px;height:8px;border-radius:50%;
+    background:#FF3B3B;
+    box-shadow:0 0 8px rgba(255,59,59,.8);
+    animation:blink 1.2s ease-in-out infinite;
+  }
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+  .stat span{display:block;margin-top:4px;font-size:11px;line-height:1.3;color:var(--dim);text-transform:uppercase;letter-spacing:.07em}
 
   @media(prefers-reduced-motion:reduce){
-    .glow,.hero-in,.tag i,.bob{animation:none}
+    .glow,.hero-in,.tag i,.bob,.stat .dot{animation:none}
     .hero-in{opacity:1}
     h1 span{animation:none;-webkit-text-fill-color:var(--gold)}
     .reveal{opacity:1;transform:none;transition:none}
     .stat{opacity:1;transform:none;transition:none}
-    .frame,.frame img,.frame::after,.btn-process{transition:none}
+    .head .line{transform:none;transition:none}
+    .frame,.frame img,.frame::after,.contact a,.more{transition:none}
     .cursor-glow{display:none}
     html{scroll-behavior:auto}
   }
@@ -312,12 +341,11 @@
 <div class="glow g2"></div>
 <div class="wrap">
   <h1 class="hero-in">Anthony Taravella <span>Portfolio</span></h1>
-  <p class="contact hero-in" style="animation-delay:.15s">agtara317@gmail.com &nbsp;·&nbsp; 718-608-4053</p>
-  <p class="bio hero-in" style="animation-delay:.3s">Solo game developer building on Roblox, UEFN, and Unreal Engine 5. I take every game from idea to launch myself — design, 3D art in Blender, gameplay programming, and release.</p>
+  <p class="contact hero-in" style="animation-delay:.15s"><a href="mailto:agtara317@gmail.com">agtara317@gmail.com</a><a href="tel:7186084053">718-608-4053</a></p>
+  <p class="bio hero-in" style="animation-delay:.3s">Solo game developer building on Roblox, UEFN, and Unreal Engine 5.</p>
 
   <div class="section featured reveal" id="roblox">
-    <span class="tag"><i></i>Featured</span>
-    <h2>Roblox Games</h2>
+    <div class="head"><h2>Roblox Games</h2><span class="tag"><i></i>Featured</span><span class="line"></span></div>
     <div class="feature">
       <div class="bob">
         <a class="frame" href="https://www.roblox.com/games/71593571625633/Survive-the-River" target="_blank" rel="noopener">
@@ -325,12 +353,14 @@
         </a>
       </div>
       <div class="desc">
+        <h3>Survive the River</h3>
         <div class="stats">
-          <div class="stat" style="--i:0"><b data-count="980" data-suffix="K+">980K+</b><span>Visits</span></div>
-          <div class="stat" style="--i:1"><b data-count="2.6" data-suffix="K">2.6K</b><span>Peak CCU</span></div>
+          <div class="stat" style="--i:0"><b data-count="1" data-suffix="M+">1M+</b><span>Visits</span></div>
+          <div class="stat live" style="--i:1" id="live-ccu"><i class="dot" title="Live"></i><span>Live CCU</span><b>—</b></div>
           <div class="stat" style="--i:2"><b data-count="88" data-suffix="%">88%</b><span>Liked</span></div>
         </div>
-        <p><strong>Survive the River</strong> — a co-op boat survival shooter. Up to four players ride a boat downriver through themed biomes, shooting enemies attacking from the water, land, and sky while upgrading their guns and boat mid-run.<br><a class="more" href="https://www.roblox.com/games/71593571625633/Survive-the-River" target="_blank" rel="noopener">More info</a></p>
+        <p>A co-op boat survival shooter. Up to four players ride a boat downriver through themed biomes, shooting enemies attacking from the water, land, and sky while upgrading their guns and boat mid-run.</p>
+        <a class="more" href="https://www.roblox.com/games/71593571625633/Survive-the-River" target="_blank" rel="noopener">More info</a>
       </div>
     </div>
 
@@ -338,25 +368,29 @@
       <a class="frame" href="https://www.roblox.com/games/70953091928109/SILENCE" target="_blank" rel="noopener">
         <div class="img"><img src="SilenceIcon.png" alt="Silence"></div>
       </a>
-      <p class="desc"><strong>Silence</strong> — an escape-horror game across three maps: The Hallways, The Depot, and The Farm.<br><a class="more" href="https://www.roblox.com/games/70953091928109/SILENCE" target="_blank" rel="noopener">More info</a></p>
+      <div class="desc">
+        <h3>Silence</h3>
+        <p>An escape-horror game across three maps: The Hallways, The Depot, and The Farm.</p>
+        <a class="more" href="https://www.roblox.com/games/70953091928109/SILENCE" target="_blank" rel="noopener">More info</a>
+      </div>
     </div>
-
   </div>
 
   <div class="section reveal">
-    <h2>Fortnite Profile</h2>
+    <div class="head"><h2>Fortnite Profile</h2><span class="line"></span></div>
     <div class="feature">
       <a class="frame" href="https://fortnite.gg/creator/spidrmonkey" target="_blank" rel="noopener">
         <div class="img"><img src="PFP.png" alt="Fortnite Developer Profile"></div>
       </a>
       <div class="desc">
-        <p><strong>Fortnite Developer Profile</strong> — my published UEFN/Fortnite work. I've been developing and shipping games on Fortnite for 4 years, building gameplay systems in Verse and designing every island to comply with Epic's content guidelines.</p>
-        <ul class="statlist">
-          <li>8K+ followers</li>
-          <li>7.2M minutes played</li>
-          <li>37K favorites</li>
-          <li>Peak CCU of 1.35K players</li>
-        </ul>
+        <h3>Fortnite Developer Profile</h3>
+        <div class="stats four">
+          <div class="stat" style="--i:0"><b data-count="8" data-suffix="K+">8K+</b><span>Followers</span></div>
+          <div class="stat" style="--i:1"><b data-count="7.2" data-suffix="M">7.2M</b><span>Minutes played</span></div>
+          <div class="stat" style="--i:2"><b data-count="37" data-suffix="K">37K</b><span>Favorites</span></div>
+          <div class="stat" style="--i:3"><b data-count="1.35" data-suffix="K">1.35K</b><span>Peak CCU</span></div>
+        </div>
+        <p>My published UEFN/Fortnite work. I've been developing and shipping games on Fortnite for 4 years, building gameplay systems in Verse and designing every island to comply with Epic's content guidelines.</p>
         <a class="more" href="https://fortnite.gg/creator/spidrmonkey" target="_blank" rel="noopener">More info</a>
       </div>
     </div>
@@ -371,11 +405,12 @@
   function countUp(el){
     const raw = el.dataset.count, end = parseFloat(raw);
     const dec = (raw.split('.')[1] || '').length, suf = el.dataset.suffix || '';
-    if(still){ el.textContent = end.toFixed(dec) + suf; return; }
+    const fmt = v => Number(v.toFixed(dec)).toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec}) + suf;
+    if(still){ el.textContent = fmt(end); return; }
     const t0 = performance.now(), dur = 1500;
     const step = t => {
       const k = Math.min((t - t0) / dur, 1), ease = 1 - Math.pow(1 - k, 3);
-      el.textContent = (end * ease).toFixed(dec) + suf;
+      el.textContent = fmt(end * ease);
       if(k < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
@@ -395,6 +430,32 @@
     });
   },{threshold:.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // live player count for Survive the River (refreshes every 30s)
+  const liveTile = document.getElementById('live-ccu');
+  let liveOk = false;
+  async function loadLive(){
+    try{
+      const r = await fetch('https://games.roproxy.com/v1/games?universeIds=10770461124');
+      const n = (await r.json()).data[0].playing;
+      if(typeof n !== 'number') throw 0;
+      const b = liveTile.querySelector('b');
+      if(!liveOk){
+        liveOk = true;
+        b.dataset.count = String(n);
+        if(liveTile.closest('.reveal.in')) countUp(b); else b.textContent = '0';
+      }else{
+        b.textContent = n.toLocaleString('en-US');
+      }
+    }catch(e){
+      if(!liveOk){ // fall back to peak CCU if the live count can't load
+        liveTile.classList.remove('live');
+        liveTile.innerHTML = '<b>2.6K</b><span>Peak CCU</span>';
+      }
+    }
+  }
+  loadLive();
+  setInterval(()=>{ if(liveOk) loadLive(); }, 30000);
 
   // scroll progress bar
   const bar = document.querySelector('.progress');
