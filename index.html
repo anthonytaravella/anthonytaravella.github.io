@@ -232,9 +232,7 @@
     position:relative;
     overflow:hidden;
     border-color:rgba(242,180,65,.3);
-    padding-bottom:70px;
   }
-  .section.featured > *:not(.waves){position:relative;z-index:1}
   .tag{
     display:inline-flex;
     align-items:center;
@@ -258,11 +256,6 @@
     100%{box-shadow:0 0 0 10px rgba(242,180,65,0)}
   }
 
-  /* flowing river waves */
-  .waves{position:absolute;left:0;right:0;bottom:0;height:64px;pointer-events:none;z-index:0}
-  .waves svg{position:absolute;bottom:0;left:0;width:200%;height:100%;animation:flow 16s linear infinite}
-  .waves svg.w2{animation-duration:10s;animation-direction:reverse;height:80%}
-  @keyframes flow{to{transform:translateX(-50%)}}
 
   /* boat bob on the featured image */
   .bob{animation:bob 4.5s ease-in-out infinite}
@@ -301,7 +294,7 @@
   .stat span{font-size:11.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
 
   @media(prefers-reduced-motion:reduce){
-    .glow,.hero-in,.tag i,.waves svg,.bob{animation:none}
+    .glow,.hero-in,.tag i,.bob{animation:none}
     .hero-in{opacity:1}
     h1 span{animation:none;-webkit-text-fill-color:var(--gold)}
     .reveal{opacity:1;transform:none;transition:none}
@@ -348,10 +341,6 @@
       <p class="desc"><strong>Silence</strong> — an escape-horror game across three maps: The Hallways, The Depot, and The Farm.<br><a class="more" href="https://www.roblox.com/games/70953091928109/SILENCE" target="_blank" rel="noopener">More info</a></p>
     </div>
 
-    <div class="waves" aria-hidden="true">
-      <svg class="w1" viewBox="0 0 2400 64" preserveAspectRatio="none"><path fill="rgba(30,110,140,.35)" d="M0 30 Q50 16 100 30 T200 30 T300 30 T400 30 T500 30 T600 30 T700 30 T800 30 T900 30 T1000 30 T1100 30 T1200 30 T1300 30 T1400 30 T1500 30 T1600 30 T1700 30 T1800 30 T1900 30 T2000 30 T2100 30 T2200 30 T2300 30 T2400 30 L2400 64 L0 64Z"/></svg>
-      <svg class="w2" viewBox="0 0 2400 64" preserveAspectRatio="none"><path fill="rgba(95,198,224,.18)" d="M0 36 Q75 26 150 36 T300 36 T450 36 T600 36 T750 36 T900 36 T1050 36 T1200 36 T1350 36 T1500 36 T1650 36 T1800 36 T1950 36 T2100 36 T2250 36 T2400 36 L2400 64 L0 64Z"/></svg>
-    </div>
   </div>
 
   <div class="section reveal">
