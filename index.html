@@ -311,6 +311,8 @@
   }
   .stat{position:relative}
   .stat.live span{margin:0 0 4px}
+  .stat b{white-space:nowrap}
+  #live-visits b{font-size:clamp(15px,4.3vw,24px)}
   .stat .dot{
     position:absolute;top:10px;right:10px;
     width:8px;height:8px;border-radius:50%;
@@ -341,7 +343,7 @@
 <div class="glow g2"></div>
 <div class="wrap">
   <h1 class="hero-in">Anthony Taravella <span>Portfolio</span></h1>
-  <p class="contact hero-in" style="animation-delay:.15s"><a href="mailto:agtara317@gmail.com">agtara317@gmail.com</a><a href="tel:7186084053">718-608-4053</a></p>
+  <p class="contact hero-in" style="animation-delay:.15s"><a href="mailto:agtara317@gmail.com">agtara317@gmail.com</a><a href="tel:7186084053">718-608-4053</a><a href="Resume.pdf" target="_blank" rel="noopener">Resume</a></p>
   <p class="bio hero-in" style="animation-delay:.3s">Solo game developer building on Roblox, UEFN, and Unreal Engine 5.</p>
 
   <div class="section featured reveal" id="roblox">
@@ -355,9 +357,9 @@
       <div class="desc">
         <h3>Survive the River</h3>
         <div class="stats">
-          <div class="stat" style="--i:0"><b data-count="1" data-suffix="M+">1M+</b><span>Visits</span></div>
+          <div class="stat" style="--i:0" id="live-visits"><b>—</b><span>Visits</span></div>
           <div class="stat live" style="--i:1" id="live-ccu"><i class="dot" title="Live"></i><span>Live CCU</span><b>—</b></div>
-          <div class="stat" style="--i:2"><b data-count="88" data-suffix="%">88%</b><span>Liked</span></div>
+          <div class="stat" style="--i:2" id="live-liked"><b>—</b><span>Liked</span></div>
         </div>
         <p>A co-op boat survival shooter. Up to four players ride a boat downriver through themed biomes, shooting enemies attacking from the water, land, and sky while upgrading their guns and boat mid-run.</p>
         <a class="more" href="https://www.roblox.com/games/71593571625633/Survive-the-River" target="_blank" rel="noopener">More info</a>
@@ -431,31 +433,53 @@
   },{threshold:.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-  // live player count for Survive the River (refreshes every 30s)
-  const liveTile = document.getElementById('live-ccu');
-  let liveOk = false;
+  // live Survive the River stats: visits, CCU, like % (refresh every 30s)
+  const UNI = 10770461124, API = 'https://games.roproxy.com/v1/games';
+  const tiles = {
+    visits: document.getElementById('live-visits'),
+    ccu: document.getElementById('live-ccu'),
+    liked: document.getElementById('live-liked')
+  };
+  const shown = {};
+  function showLive(key, n, suffix){
+    if(shown[key] === 'fallback') return;
+    suffix = suffix || '';
+    const b = tiles[key].querySelector('b');
+    if(!shown[key]){
+      shown[key] = true;
+      b.dataset.count = String(n);
+      b.dataset.suffix = suffix;
+      if(tiles[key].closest('.reveal.in')) countUp(b); else b.textContent = '0' + suffix;
+    }else{
+      b.textContent = n.toLocaleString('en-US') + suffix;
+    }
+  }
+  function fallback(key, html){ // static values if the live data can't load
+    if(shown[key]) return;
+    shown[key] = 'fallback';
+    tiles[key].classList.remove('live');
+    tiles[key].innerHTML = html;
+  }
+  async function getJSON(u){ const r = await fetch(u); if(!r.ok) throw r.status; return r.json(); }
   async function loadLive(){
-    try{
-      const r = await fetch('https://games.roproxy.com/v1/games?universeIds=10770461124');
-      const n = (await r.json()).data[0].playing;
-      if(typeof n !== 'number') throw 0;
-      const b = liveTile.querySelector('b');
-      if(!liveOk){
-        liveOk = true;
-        b.dataset.count = String(n);
-        if(liveTile.closest('.reveal.in')) countUp(b); else b.textContent = '0';
-      }else{
-        b.textContent = n.toLocaleString('en-US');
-      }
-    }catch(e){
-      if(!liveOk){ // fall back to peak CCU if the live count can't load
-        liveTile.classList.remove('live');
-        liveTile.innerHTML = '<b>2.6K</b><span>Peak CCU</span>';
-      }
+    const [g, v] = await Promise.allSettled([getJSON(API + '?universeIds=' + UNI), getJSON(API + '/' + UNI + '/votes')]);
+    const game = g.status === 'fulfilled' && g.value.data && g.value.data[0];
+    if(game && typeof game.playing === 'number' && typeof game.visits === 'number'){
+      showLive('visits', game.visits);
+      showLive('ccu', game.playing);
+    }else{
+      fallback('visits', '<b>1M+</b><span>Visits</span>');
+      fallback('ccu', '<b>2.6K</b><span>Peak CCU</span>');
+    }
+    const up = v.status === 'fulfilled' ? v.value.upVotes : null, down = v.status === 'fulfilled' ? v.value.downVotes : null;
+    if(typeof up === 'number' && typeof down === 'number' && up + down > 0){
+      showLive('liked', Math.round(up / (up + down) * 100), '%');
+    }else{
+      fallback('liked', '<b>88%</b><span>Liked</span>');
     }
   }
   loadLive();
-  setInterval(()=>{ if(liveOk) loadLive(); }, 30000);
+  setInterval(loadLive, 30000);
 
   // scroll progress bar
   const bar = document.querySelector('.progress');
