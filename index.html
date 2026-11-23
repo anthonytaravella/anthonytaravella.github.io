@@ -75,6 +75,7 @@
     display:flex;
     justify-content:center;
     flex-wrap:wrap;
+    align-items:center;
     gap:10px;
     margin:-40px 0 22px;
   }
@@ -89,6 +90,17 @@
     transition:background .2s, border-color .2s, transform .2s;
   }
   .contact a:hover{background:rgba(242,180,65,.14);border-color:var(--gold);transform:translateY(-2px)}
+  .contact a.resume{
+    border:0;
+    background:none;
+    padding:4px 6px;
+    font-size:18px;
+    font-weight:700;
+    color:#FF4D4D;
+    text-decoration:underline;
+    text-underline-offset:4px;
+  }
+  .contact a.resume:hover{background:none;color:#FF7A7A}
   .bio{
     font-family:"Bricolage Grotesque",sans-serif;
     font-weight:400;
@@ -312,7 +324,6 @@
   .stat{position:relative}
   .stat.live span{margin:0 0 4px}
   .stat b{white-space:nowrap}
-  #live-visits b{font-size:clamp(15px,4.3vw,24px)}
   .stat .dot{
     position:absolute;top:10px;right:10px;
     width:8px;height:8px;border-radius:50%;
@@ -343,7 +354,7 @@
 <div class="glow g2"></div>
 <div class="wrap">
   <h1 class="hero-in">Anthony Taravella <span>Portfolio</span></h1>
-  <p class="contact hero-in" style="animation-delay:.15s"><a href="mailto:agtara317@gmail.com">agtara317@gmail.com</a><a href="tel:7186084053">718-608-4053</a><a href="Resume.pdf" target="_blank" rel="noopener">Resume</a></p>
+  <p class="contact hero-in" style="animation-delay:.15s"><a href="mailto:agtara317@gmail.com">agtara317@gmail.com</a><a href="tel:7186084053">718-608-4053</a><a class="resume" href="Resume.pdf" target="_blank" rel="noopener">Resume</a></p>
   <p class="bio hero-in" style="animation-delay:.3s">Solo game developer building on Roblox, UEFN, and Unreal Engine 5.</p>
 
   <div class="section featured reveal" id="roblox">
@@ -465,7 +476,9 @@
     const [g, v] = await Promise.allSettled([getJSON(API + '?universeIds=' + UNI), getJSON(API + '/' + UNI + '/votes')]);
     const game = g.status === 'fulfilled' && g.value.data && g.value.data[0];
     if(game && typeof game.playing === 'number' && typeof game.visits === 'number'){
-      showLive('visits', game.visits);
+      const v = game.visits; // rounded down, e.g. 1,351,872 -> 1.3M+
+      if(v >= 1e6) showLive('visits', Math.floor(v / 1e5) / 10, 'M+');
+      else showLive('visits', Math.floor(v / 1e3), 'K+');
       showLive('ccu', game.playing);
     }else{
       fallback('visits', '<b>1M+</b><span>Visits</span>');
